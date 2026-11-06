@@ -1,0 +1,46 @@
+version: 1
+script:
+  - meson setup .appimage-build/meson --prefix=/usr
+  - meson compile -C .appimage-build/meson
+  - meson test -C .appimage-build/meson --print-errorlogs
+  - meson install -C .appimage-build/meson --destdir "$TARGET_APPDIR"
+  - glib-compile-schemas "$TARGET_APPDIR/usr/share/glib-2.0/schemas"
+AppDir:
+  path: ./.appimage-build/AppDir
+  app_info:
+    id: tech.digiroad.ImageFlow
+    name: ImageFlow
+    icon: tech.digiroad.ImageFlow
+    version: {{APP_VERSION}}
+    exec: usr/bin/python3
+    exec_args: $APPDIR/usr/bin/imageflow $@
+  apt:
+    arch: [amd64]
+    include:
+      - ffmpeg
+      - gir1.2-adw-1
+      - gir1.2-gtk-4.0
+      - gstreamer1.0-libav
+      - gstreamer1.0-plugins-base
+      - gstreamer1.0-plugins-good
+      - libadwaita-1-0
+      - libgtk-4-1
+      - python3
+      - python3-gi
+  runtime:
+    env:
+      PYTHONHOME: '${APPDIR}/usr'
+      PYTHONPATH: '${APPDIR}/usr/lib/python3/dist-packages'
+      GI_TYPELIB_PATH: '${APPDIR}/usr/lib/x86_64-linux-gnu/girepository-1.0'
+      GSETTINGS_SCHEMA_DIR: '${APPDIR}/usr/share/glib-2.0/schemas'
+      XDG_DATA_DIRS: '${APPDIR}/usr/share'
+      GST_PLUGIN_SYSTEM_PATH: '${APPDIR}/usr/lib/x86_64-linux-gnu/gstreamer-1.0'
+      GST_PLUGIN_SCANNER: '${APPDIR}/usr/lib/x86_64-linux-gnu/gstreamer1.0/gstreamer-1.0/gst-plugin-scanner'
+  files:
+    exclude:
+      - usr/share/doc/*/changelog.*
+      - usr/share/doc/*/copyright
+      - usr/share/man
+AppImage:
+  arch: x86_64
+  file_name: ImageFlow-{{APP_VERSION}}-x86_64.AppImage

@@ -1,0 +1,118 @@
+# window.py
+#
+# Copyright 2026 Golodnikov Sergey
+#
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+#
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty
+# of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+# See the GNU General Public License for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+#
+# SPDX-License-Identifier: GPL-3.0-or-later
+
+
+from gettext import gettext as _
+from gi.repository import Adw, Gtk
+
+
+@Gtk.Template(resource_path='/tech/digiroad/ImageFlow/gtk/window.ui')
+class WindowIF(Adw.ApplicationWindow):
+    __gtype_name__ = 'ImageFlow'
+
+    title = Gtk.Template.Child('title')
+
+    loop = Gtk.Template.Child('loop')
+    trim = Gtk.Template.Child('trim')
+
+    overlay = Gtk.Template.Child('overlay')
+    display = Gtk.Template.Child('display')
+    spinner = Gtk.Template.Child('spinner')
+    external = Gtk.Template.Child('external')
+    crop_canvas = Gtk.Template.Child('crop-canvas')
+    crop_toggle = Gtk.Template.Child('crop-toggle')
+    crop_reset = Gtk.Template.Child('crop-reset')
+    frames_toggle = Gtk.Template.Child('frames-toggle')
+    frames_revealer = Gtk.Template.Child('frames-revealer')
+    frames_flow = Gtk.Template.Child('frames-flow')
+    frames_remove = Gtk.Template.Child('frames-remove')
+    frames_clear = Gtk.Template.Child('frames-clear')
+    frames_page_previous = Gtk.Template.Child('frames-page-previous')
+    frames_page_next = Gtk.Template.Child('frames-page-next')
+    frames_page_label = Gtk.Template.Child('frames-page-label')
+
+    video = Gtk.Template.Child('video')
+
+    segment = Gtk.Template.Child('segment')
+    segment_box_start = Gtk.Template.Child('s-box-start')
+    segment_box_end = Gtk.Template.Child('s-box-end')
+    segment_button_start = Gtk.Template.Child('s-button-start')
+    segment_button_end = Gtk.Template.Child('s-button-end')
+    segment_entry_start = Gtk.Template.Child('s-entry-start')
+    segment_entry_end = Gtk.Template.Child('s-entry-end')
+
+    open_file = Gtk.Template.Child('open-file')
+    save_file = Gtk.Template.Child('save-file')
+
+    generate = Gtk.Template.Child('generate')
+    preview = Gtk.Template.Child('preview')
+
+    image_size = Gtk.Template.Child('image-size')
+    image_width = Gtk.Template.Child('image-width')
+    image_height = Gtk.Template.Child('image-height')
+
+    scaler = Gtk.Template.Child('scaler')
+    keep_aspect_ratio = Gtk.Template.Child('keep-aspect-ratio')
+    framerate = Gtk.Template.Child('framerate')
+
+    dither = Gtk.Template.Child('dither')
+    max_colors = Gtk.Template.Child('max-colors')
+    format = Gtk.Template.Child('format')
+
+    pref_dialog = Gtk.Template.Child('pref-dialog')
+
+    pref_theme = Gtk.Template.Child('pref-theme')
+    detect_size = Gtk.Template.Child('detect-size')
+
+    accurate_rnd = Gtk.Template.Child('accurate-rnd')
+    stats_mode = Gtk.Template.Child('stats-mode')
+    bayer_scale = Gtk.Template.Child('bayer-scale')
+
+    webp_lossless = Gtk.Template.Child('webp-lossless')
+    webp_quality = Gtk.Template.Child('webp-quality')
+    webp_preset = Gtk.Template.Child('webp-preset')
+    webp_compression = Gtk.Template.Child('webp-compression')
+
+    avif_quality = Gtk.Template.Child('avif-quality')
+    avif_speed = Gtk.Template.Child('avif-speed')
+
+    # variables for translation
+    ts_size = _('Done, image size in MB =')
+    ts_save = _('Saved:')
+    ts_save_show = _('Show in Files')
+    ts_src = _('Source')
+    ts_cancel = _('Cancel')
+    ts_comment = _('Application for converting video files to '
+                   'high-quality animated images.')
+    ts_error_permissions = (
+        _('File not accessible'),
+        _('Check that the application can access the file'),
+    )
+    ts_error_analysis = _('Analysis error')
+    ts_error_analysis_video = _('No video stream found in file')
+    ts_error_analysis_duration = _('Unable to determine video duration')
+    ts_error_saving = _('Saving error')
+    ts_error_timestamp = _('Timestamp')
+    ts_frame = _('Frame')
+    ts_error_frames = _('No frames to generate')
+    ts_error_frames_detail = _(
+        'Restore at least one frame or adjust the selected time range.')
+
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)

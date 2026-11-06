@@ -1,0 +1,5 @@
+*.cmb
+note
+/.appimage-build/
+/build/
+/*.AppImage

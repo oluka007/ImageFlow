@@ -1,0 +1,702 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!-- Created with Cambalache 1.2.0 -->
+<interface>
+  <!-- interface-name window.ui -->
+  <requires lib="Adw" version="1.0"/>
+  <requires lib="gio" version="2.0"/>
+  <requires lib="gtk" version="4.0"/>
+  <requires lib="libadwaita" version="1.7"/>
+  <template class="ImageFlow" parent="AdwApplicationWindow">
+    <property name="content">
+      <object class="AdwToolbarView">
+        <property name="content">
+          <object class="AdwToastOverlay" id="overlay">
+            <property name="child">
+              <object class="GtkBox">
+                <property name="orientation">vertical</property>
+                <child>
+                  <object class="GtkStack">
+                    <property name="vexpand">True</property>
+                <child>
+                  <object class="GtkOverlay" id="display">
+                    <child>
+                      <object class="GtkVideo" id="video"/>
+                    </child>
+                    <child type="overlay">
+                      <object class="GtkDrawingArea" id="crop-canvas">
+                        <property name="can-target">False</property>
+                        <property name="hexpand">True</property>
+                        <property name="vexpand">True</property>
+                        <property name="visible">False</property>
+                      </object>
+                    </child>
+                    <child type="overlay">
+                      <object class="GtkGrid" id="segment">
+                        <property name="halign">center</property>
+                        <property name="margin-top">10</property>
+                        <property name="valign">start</property>
+                        <property name="visible">False</property>
+                        <child>
+                          <object class="GtkBox" id="s-box-start">
+                            <child>
+                              <object class="GtkButton" id="s-button-start">
+                                <property name="label" translatable="yes">Start</property>
+                                <style/>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkEntry" id="s-entry-start">
+                                <property name="max-width-chars">12</property>
+                                <style/>
+                              </object>
+                            </child>
+                            <style>
+                              <class name="linked"/>
+                            </style>
+                            <layout>
+                              <property name="column">0</property>
+                              <property name="row">0</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkBox" id="s-box-end">
+                            <child>
+                              <object class="GtkButton" id="s-button-end">
+                                <property name="label" translatable="yes">End</property>
+                                <property name="margin-start">20</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkEntry" id="s-entry-end">
+                                <property name="max-width-chars">12</property>
+                              </object>
+                            </child>
+                            <style>
+                              <class name="linked"/>
+                            </style>
+                            <layout>
+                              <property name="column">1</property>
+                              <property name="row">0</property>
+                            </layout>
+                          </object>
+                        </child>
+                        <style>
+                          <class name="toolbar"/>
+                          <class name="darken"/>
+                          <class name="osd"/>
+                        </style>
+                      </object>
+                    </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwSpinner" id="spinner"/>
+                </child>
+                <child>
+                  <object class="GtkButton" id="external">
+                    <property name="child">
+                      <object class="AdwButtonContent">
+                        <property name="icon-name">view-reveal-symbolic</property>
+                        <property name="label" translatable="yes">View a file externally</property>
+                      </object>
+                    </property>
+                    <property name="halign">center</property>
+                    <property name="height-request">40</property>
+                    <property name="valign">center</property>
+                    <style>
+                      <class name="success"/>
+                    </style>
+                  </object>
+                </child>
+                  </object>
+                </child>
+                <child>
+                  <object class="GtkRevealer" id="frames-revealer">
+                    <property name="transition-type">slide-up</property>
+                    <property name="reveal-child">False</property>
+                    <property name="child">
+                      <object class="GtkBox">
+                        <property name="orientation">vertical</property>
+                        <property name="spacing">6</property>
+                        <property name="margin-start">12</property>
+                        <property name="margin-end">12</property>
+                        <property name="margin-top">8</property>
+                        <property name="margin-bottom">8</property>
+                        <child>
+                          <object class="GtkBox">
+                            <property name="spacing">8</property>
+                            <child>
+                              <object class="GtkLabel">
+                                <property name="label" translatable="yes">Select one frame to remove it, or multiple frames to remove the span.</property>
+                                <property name="hexpand">True</property>
+                                <property name="xalign">0</property>
+                                <property name="wrap">True</property>
+                                <style>
+                                  <class name="dim-label"/>
+                                </style>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="frames-page-previous">
+                                <property name="icon-name">go-previous-symbolic</property>
+                                <property name="sensitive">False</property>
+                                <property name="tooltip-text" translatable="yes">Previous frames</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="frames-page-label"/>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="frames-page-next">
+                                <property name="icon-name">go-next-symbolic</property>
+                                <property name="sensitive">False</property>
+                                <property name="tooltip-text" translatable="yes">Next frames</property>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="frames-remove">
+                                <property name="label" translatable="yes">Remove selected</property>
+                                <property name="sensitive">False</property>
+                                <style>
+                                  <class name="destructive-action"/>
+                                </style>
+                              </object>
+                            </child>
+                            <child>
+                              <object class="GtkButton" id="frames-clear">
+                                <property name="label" translatable="yes">Restore all</property>
+                                <property name="sensitive">False</property>
+                              </object>
+                            </child>
+                          </object>
+                        </child>
+                        <child>
+                          <object class="GtkScrolledWindow">
+                            <property name="hscrollbar-policy">automatic</property>
+                            <property name="vscrollbar-policy">never</property>
+                            <property name="height-request">108</property>
+                            <property name="child">
+                              <object class="GtkBox" id="frames-flow">
+                                <property name="spacing">8</property>
+                                <property name="margin-start">4</property>
+                                <property name="margin-end">4</property>
+                              </object>
+                            </property>
+                          </object>
+                        </child>
+                      </object>
+                    </property>
+                  </object>
+                </child>
+              </object>
+            </property>
+          </object>
+        </property>
+        <child type="top">
+          <object class="AdwHeaderBar">
+            <property name="title-widget">
+              <object class="AdwWindowTitle" id="title">
+                <property name="title">ImageFlow</property>
+              </object>
+            </property>
+            <child type="start">
+              <object class="GtkButton" id="open-file">
+                <property name="child">
+                  <object class="AdwButtonContent">
+                    <property name="icon-name">document-open-symbolic</property>
+                    <property name="label" translatable="yes">Open</property>
+                  </object>
+                </property>
+                <property name="tooltip-text" translatable="yes">Open video file</property>
+                <style>
+                  <class name="suggested-action"/>
+                </style>
+              </object>
+            </child>
+            <child type="end">
+              <object class="GtkMenuButton">
+                <property name="icon-name">open-menu-symbolic</property>
+                <property name="menu-model">primary_menu</property>
+                <property name="tooltip-text" translatable="yes">Application menu</property>
+              </object>
+            </child>
+            <child type="end">
+              <object class="GtkCheckButton" id="loop">
+                <property name="label" translatable="yes">Loop</property>
+                <property name="margin-end">10</property>
+                <property name="tooltip-text" translatable="yes">Video looping</property>
+              </object>
+            </child>
+            <child type="end">
+              <object class="GtkCheckButton" id="trim">
+                <property name="label" translatable="yes">Trim</property>
+                <property name="sensitive">False</property>
+                <property name="tooltip-text" translatable="yes">Select a time segment</property>
+                <style/>
+              </object>
+            </child>
+            <child type="end">
+              <object class="GtkToggleButton" id="crop-toggle">
+                <property name="label" translatable="yes">Crop</property>
+                <property name="sensitive">False</property>
+                <property name="tooltip-text" translatable="yes">Drag the crop handles to choose the area to keep</property>
+              </object>
+            </child>
+            <child type="end">
+              <object class="GtkButton" id="crop-reset">
+                <property name="label" translatable="yes">Reset crop</property>
+                <property name="sensitive">False</property>
+              </object>
+            </child>
+            <child type="end">
+              <object class="GtkToggleButton" id="frames-toggle">
+                <property name="label" translatable="yes">Frames</property>
+                <property name="sensitive">False</property>
+                <property name="tooltip-text" translatable="yes">Show frames to remove from the output</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child type="bottom">
+          <object class="GtkGrid">
+            <property name="accessible-role">grid</property>
+            <property name="column-spacing">10</property>
+            <property name="halign">center</property>
+            <property name="margin-bottom">20</property>
+            <property name="margin-end">20</property>
+            <property name="margin-start">20</property>
+            <property name="margin-top">20</property>
+            <child>
+              <object class="AdwPreferencesGroup">
+                <property name="width-request">220</property>
+                <child>
+                  <object class="AdwComboRow" id="image-size">
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <property name="strings" translatable="yes">Original
+4320p
+2160p
+1440p
+1080p
+720p
+480p
+360p
+User</property>
+                      </object>
+                    </property>
+                    <property name="selected">5</property>
+                    <property name="subtitle" translatable="yes">Image size</property>
+                    <property name="title" translatable="yes">Size</property>
+                    <property name="width-request">220</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwSpinRow" id="image-width">
+                    <property name="adjustment">
+                      <object class="GtkAdjustment">
+                        <property name="lower">320.0</property>
+                        <property name="page-increment">1.0</property>
+                        <property name="step-increment">1.0</property>
+                        <property name="upper">8192.0</property>
+                        <property name="value">1280.0</property>
+                      </object>
+                    </property>
+                    <property name="numeric">True</property>
+                    <property name="title" translatable="yes">Width</property>
+                    <property name="width-request">220</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwSpinRow" id="image-height">
+                    <property name="adjustment">
+                      <object class="GtkAdjustment">
+                        <property name="lower">240.0</property>
+                        <property name="page-increment">1.0</property>
+                        <property name="step-increment">1.0</property>
+                        <property name="upper">4320.0</property>
+                        <property name="value">720.0</property>
+                      </object>
+                    </property>
+                    <property name="numeric">True</property>
+                    <property name="title" translatable="yes">Height</property>
+                    <property name="width-request">220</property>
+                  </object>
+                </child>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">0</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="AdwPreferencesGroup">
+                <child>
+                  <object class="AdwComboRow" id="scaler">
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <property name="strings">Area
+Bicubic
+Bicublin
+Bilinear
+Fast Bilinear
+Gauss
+Lanczos
+Neighbor
+Sinc
+Spline</property>
+                      </object>
+                    </property>
+                    <property name="selected">6</property>
+                    <property name="subtitle" translatable="yes">Interpolation</property>
+                    <property name="title" translatable="yes">Scaler</property>
+                    <property name="width-request">270</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwSwitchRow" id="keep-aspect-ratio">
+                    <property name="active">True</property>
+                    <property name="subtitle" translatable="yes">Keep aspect ratio</property>
+                    <property name="title" translatable="yes">Ratio</property>
+                    <property name="width-request">270</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwSpinRow" id="framerate">
+                    <property name="adjustment">
+                      <object class="GtkAdjustment">
+                        <property name="lower">5.0</property>
+                        <property name="page-increment">1.0</property>
+                        <property name="step-increment">1.0</property>
+                        <property name="upper">360.0</property>
+                        <property name="value">24.0</property>
+                      </object>
+                    </property>
+                    <property name="numeric">True</property>
+                    <property name="subtitle" translatable="yes">Frames per second</property>
+                    <property name="title" translatable="yes">FPS</property>
+                    <property name="width-request">270</property>
+                  </object>
+                </child>
+                <layout>
+                  <property name="column">1</property>
+                  <property name="row">0</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="AdwPreferencesGroup">
+                <child>
+                  <object class="AdwComboRow" id="dither">
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <property name="strings">Atkinson
+Bayer
+Burkes
+Floyd Steinberg
+Heckbert
+None
+Sierra 2
+Sierra 2 (4a)
+Sierra 3</property>
+                      </object>
+                    </property>
+                    <property name="selected">1</property>
+                    <property name="subtitle" translatable="yes">Dithering mode</property>
+                    <property name="title" translatable="yes">Dither</property>
+                    <property name="width-request">260</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwSpinRow" id="max-colors">
+                    <property name="adjustment">
+                      <object class="GtkAdjustment">
+                        <property name="lower">2.0</property>
+                        <property name="page-increment">1.0</property>
+                        <property name="step-increment">1.0</property>
+                        <property name="upper">256.0</property>
+                        <property name="value">256.0</property>
+                      </object>
+                    </property>
+                    <property name="subtitle" translatable="yes">Max colors</property>
+                    <property name="title" translatable="yes">Palette</property>
+                    <property name="width-request">260</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwComboRow" id="format">
+                    <property name="model">
+                      <object class="GtkStringList">
+                        <property name="strings">GIF
+WebP
+AVIF</property>
+                      </object>
+                    </property>
+                    <property name="selected">0</property>
+                    <property name="title" translatable="yes">Format</property>
+                    <property name="width-request">260</property>
+                  </object>
+                </child>
+                <layout>
+                  <property name="column">2</property>
+                  <property name="row">0</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object class="AdwPreferencesGroup">
+                <property name="valign">center</property>
+                <child>
+                  <object class="AdwButtonRow" id="generate">
+                    <property name="sensitive">False</property>
+                    <property name="title" translatable="yes">Generate</property>
+                    <property name="width-request">160</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwSwitchRow" id="preview">
+                    <property name="sensitive">False</property>
+                    <property name="title" translatable="yes">Preview</property>
+                    <property name="width-request">160</property>
+                  </object>
+                </child>
+                <child>
+                  <object class="AdwButtonRow" id="save-file">
+                    <property name="sensitive">False</property>
+                    <property name="title" translatable="yes">Save</property>
+                    <property name="width-request">160</property>
+                  </object>
+                </child>
+                <layout>
+                  <property name="column">3</property>
+                  <property name="row">0</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </property>
+    <property name="default-height">800</property>
+    <property name="default-width">800</property>
+    <property name="title" translatable="yes">ImageFlow</property>
+  </template>
+  <menu id="primary_menu">
+    <section>
+      <item>
+        <attribute name="action">app.preferences</attribute>
+        <attribute name="label" translatable="yes">_Preferences</attribute>
+      </item>
+      <item>
+        <attribute name="action">win.show-help-overlay</attribute>
+        <attribute name="label" translatable="yes">_Keyboard Shortcuts</attribute>
+      </item>
+      <item>
+        <attribute name="action">app.about</attribute>
+        <attribute name="label" translatable="yes">_About ImageFlow</attribute>
+      </item>
+    </section>
+  </menu>
+  <object class="AdwPreferencesDialog" id="pref-dialog">
+    <property name="content-width">600</property>
+    <child>
+      <object class="AdwPreferencesPage">
+        <property name="icon-name">preferences-system-symbolic</property>
+        <property name="title" translatable="yes">General</property>
+        <child>
+          <object class="AdwPreferencesGroup">
+            <property name="title" translatable="yes">Application</property>
+            <child>
+              <object class="AdwComboRow" id="pref-theme">
+                <property name="model">
+                  <object class="GtkStringList">
+                    <property name="strings" translatable="yes">Light
+Dark</property>
+                  </object>
+                </property>
+                <property name="subtitle" translatable="yes">Application color theme</property>
+                <property name="title" translatable="yes">Theme</property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwSwitchRow" id="detect-size">
+                <property name="subtitle" translatable="yes">Detect original file resolution</property>
+                <property name="title" translatable="yes">Detect size</property>
+              </object>
+            </child>
+          </object>
+        </child>
+        <child>
+          <object class="AdwPreferencesGroup">
+            <property name="title" translatable="yes">Generation</property>
+            <child>
+              <object class="AdwSwitchRow" id="accurate-rnd">
+                <property name="subtitle" translatable="yes">Accurate rounding in interpolation</property>
+                <property name="title" translatable="yes">Accurate rounding</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="AdwPreferencesPage">
+        <property name="icon-name">image-x-generic-symbolic</property>
+        <property name="title">GIF</property>
+        <child>
+          <object class="AdwPreferencesGroup">
+            <property name="title">GIF</property>
+            <child>
+              <object class="AdwComboRow" id="stats-mode">
+                <property name="model">
+                  <object class="GtkStringList">
+                    <property name="strings">Full
+Diff
+Single</property>
+                  </object>
+                </property>
+                <property name="selected">1</property>
+                <property name="subtitle" translatable="yes">Statistics mode</property>
+                <property name="title" translatable="yes">Palette generation</property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwSpinRow" id="bayer-scale">
+                <property name="adjustment">
+                  <object class="GtkAdjustment">
+                    <property name="page-increment">1.0</property>
+                    <property name="step-increment">1.0</property>
+                    <property name="upper">5.0</property>
+                    <property name="value">2.0</property>
+                  </object>
+                </property>
+                <property name="numeric">True</property>
+                <property name="subtitle" translatable="yes">Crosshatch pattern visibility level</property>
+                <property name="title" translatable="yes">Bayer scale</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="AdwPreferencesPage">
+        <property name="icon-name">image-x-generic-symbolic</property>
+        <property name="title">WebP</property>
+        <child>
+          <object class="AdwPreferencesGroup">
+            <property name="title">WebP</property>
+            <child>
+              <object class="AdwSwitchRow" id="webp-lossless">
+                <property name="subtitle" translatable="yes">Lossless compression method</property>
+                <property name="title" translatable="yes">Lossless</property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwSpinRow" id="webp-quality">
+                <property name="adjustment">
+                  <object class="GtkAdjustment">
+                    <property name="page-increment">1.0</property>
+                    <property name="step-increment">1.0</property>
+                    <property name="upper">100.0</property>
+                    <property name="value">75.0</property>
+                  </object>
+                </property>
+                <property name="numeric">True</property>
+                <property name="subtitle" translatable="yes">Quality level</property>
+                <property name="title" translatable="yes">Quality</property>
+                <property name="tooltip-text" translatable="yes">For lossy encoding, this controls image quality. For lossless encoding, this controls the effort and time spent in compression. Range is 0 to 100. Default is 75.</property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwComboRow" id="webp-preset">
+                <property name="model">
+                  <object class="GtkStringList">
+                    <property name="strings">None
+Default
+Picture
+Photo
+Drawing
+Icon
+Text</property>
+                  </object>
+                </property>
+                <property name="selected">0</property>
+                <property name="subtitle" translatable="yes">Warning!
+This value overrides other settings</property>
+                <property name="title" translatable="yes">Preset</property>
+                <property name="tooltip-text" translatable="yes">This does some automatic settings based on the general type of the image.
+None: Do not use a preset.
+Default: Use the encoder default.
+Picture: Digital picture, like portrait, inner shot.
+Photo: Outdoor photograph, with natural lighting.
+Drawing: Hand or line drawing, with high-contrast details.
+Icon: Small-sized colorful images.
+Text: Text-like.</property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwSpinRow" id="webp-compression">
+                <property name="adjustment">
+                  <object class="GtkAdjustment">
+                    <property name="page-increment">1.0</property>
+                    <property name="step-increment">1.0</property>
+                    <property name="upper">6.0</property>
+                    <property name="value">4.0</property>
+                  </object>
+                </property>
+                <property name="numeric">True</property>
+                <property name="subtitle" translatable="yes">Adjusts quality and speed tradeoff</property>
+                <property name="title" translatable="yes">Compression level</property>
+                <property name="tooltip-text" translatable="yes">For lossy, this is a quality/speed tradeoff. Higher values give better quality for a given size at the cost of increased encoding time. For lossless, this is a size/speed tradeoff. Higher values give smaller size at the cost of increased encoding time. More specifically, it controls the number of extra algorithms and compression tools used, and varies the combination of these tools. This maps to the method option in libwebp. The valid range is 0 to 6. Default is 4.</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+    <child>
+      <object class="AdwPreferencesPage">
+        <property name="icon-name">image-x-generic-symbolic</property>
+        <property name="title">AVIF</property>
+        <child>
+          <object class="AdwPreferencesGroup">
+            <property name="title">AVIF</property>
+            <child>
+              <object class="AdwSpinRow" id="avif-quality">
+                <property name="adjustment">
+                  <object class="GtkAdjustment">
+                    <property name="page-increment">1.0</property>
+                    <property name="step-increment">1.0</property>
+                    <property name="upper">63.0</property>
+                    <property name="value">30.0</property>
+                  </object>
+                </property>
+                <property name="numeric">True</property>
+                <property name="subtitle" translatable="yes">Constant rate factor</property>
+                <property name="title" translatable="yes">Quality</property>
+                <property name="tooltip-text" translatable="yes">Constant rate factor (CRF). Lower values mean better quality and a larger file, higher values mean worse quality and a smaller file. The valid range is 0 to 63. Default is 30.</property>
+              </object>
+            </child>
+            <child>
+              <object class="AdwSpinRow" id="avif-speed">
+                <property name="adjustment">
+                  <object class="GtkAdjustment">
+                    <property name="page-increment">1.0</property>
+                    <property name="step-increment">1.0</property>
+                    <property name="upper">8.0</property>
+                    <property name="value">6.0</property>
+                  </object>
+                </property>
+                <property name="numeric">True</property>
+                <property name="subtitle" translatable="yes">Quality / speed tradeoff</property>
+                <property name="title" translatable="yes">Speed</property>
+                <property name="tooltip-text" translatable="yes">Quality / speed tradeoff (cpu-used). Higher values give faster encoding at the cost of quality. The valid range is 0 to 8. Default is 6.</property>
+              </object>
+            </child>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

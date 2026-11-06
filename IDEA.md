@@ -1,0 +1,1 @@
+Gif creator and editor

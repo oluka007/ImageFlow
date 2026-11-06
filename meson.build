@@ -1,0 +1,24 @@
+project('imageflow',
+          version: '1.2.5',
+    meson_version: '>= 1.0.0',
+  default_options: [ 'warning_level=2', 'werror=false', ],
+)
+
+i18n = import('i18n')
+gnome = import('gnome')
+
+subdir('data')
+subdir('src')
+subdir('po')
+
+xgettext = find_program('xgettext', required: false)
+msgmerge = find_program('msgmerge', required: false)
+if xgettext.found() and msgmerge.found()
+  run_command('./update_l10n.sh', check: true)
+endif
+
+gnome.post_install(
+     glib_compile_schemas: true,
+    gtk_update_icon_cache: true,
+  update_desktop_database: true,
+)
