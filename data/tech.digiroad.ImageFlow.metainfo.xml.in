@@ -57,6 +57,15 @@
 
   <releases>
 
+    <release version="1.2.6" date="2026-11-06">
+      <description translate="no">
+        <ul>
+          <li>Added video frame cropping and frame removal.</li>
+          <li>Added AppImage packaging.</li>
+        </ul>
+      </description>
+    </release>
+
     <release version="1.2.5" date="2026-10-25">
       <description translate="no">
         <ul>

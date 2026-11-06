@@ -11,7 +11,7 @@ AppDir:
     id: tech.digiroad.ImageFlow
     name: ImageFlow
     icon: tech.digiroad.ImageFlow
-    version: {{APP_VERSION}}
+    version: "{{APP_VERSION}}"
     exec: usr/bin/python3
     exec_args: $APPDIR/usr/bin/imageflow $@
   apt:
@@ -43,4 +43,4 @@ AppDir:
       - usr/share/man
 AppImage:
   arch: x86_64
-  file_name: ImageFlow-{{APP_VERSION}}-x86_64.AppImage
+  file_name: "ImageFlow-{{APP_VERSION}}-x86_64.AppImage"
