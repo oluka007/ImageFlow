@@ -6,8 +6,8 @@
   <metadata_license>CC0-1.0</metadata_license>
   <project_license>GPL-3.0-or-later</project_license>
   <summary>Crop and convert video to animated images</summary>
-  <developer id="tech.digiroad">
-    <name>Golodnikov Sergey</name>
+  <developer id="github.com/oluka007">
+    <name>oluka007 (fork maintainer)</name>
   </developer>
 
   <description>
@@ -24,12 +24,12 @@
     </ul>
   </description>
 
-  <url type="homepage">https://github.com/GS90/ImageFlow</url>
-  <url type="vcs-browser">https://github.com/GS90/ImageFlow</url>
-  <url type="bugtracker">https://github.com/GS90/ImageFlow/issues</url>
+  <url type="homepage">https://github.com/oluka007/ImageFlow</url>
+  <url type="vcs-browser">https://github.com/oluka007/ImageFlow</url>
+  <url type="bugtracker">https://github.com/oluka007/ImageFlow/issues</url>
 
-  <url type="help">https://digiroad.tech/en/projects/imageflow</url>
-  <url type="contact">https://digiroad.tech/en/main</url>
+  <url type="help">https://github.com/oluka007/ImageFlow#readme</url>
+  <url type="contact">https://github.com/oluka007</url>
 
   <translation type="gettext">imageflow</translation>
   <launchable type="desktop-id">tech.digiroad.ImageFlow.desktop</launchable>
@@ -42,15 +42,15 @@
 
   <screenshots>
     <screenshot type="default">
-      <image>https://raw.githubusercontent.com/GS90/ImageFlow/refs/heads/main/data/screenshots/dark.png</image>
+      <image>https://raw.githubusercontent.com/oluka007/ImageFlow/main/data/screenshots/dark.png</image>
       <caption>ImageFlow in dark mode</caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/GS90/ImageFlow/refs/heads/main/data/screenshots/light.png</image>
+      <image>https://raw.githubusercontent.com/oluka007/ImageFlow/main/data/screenshots/light.png</image>
       <caption>ImageFlow in light mode</caption>
     </screenshot>
     <screenshot>
-      <image>https://raw.githubusercontent.com/GS90/ImageFlow/refs/heads/main/data/screenshots/preferences.png</image>
+      <image>https://raw.githubusercontent.com/oluka007/ImageFlow/main/data/screenshots/preferences.png</image>
       <caption>ImageFlow, preferences</caption>
     </screenshot>
   </screenshots>

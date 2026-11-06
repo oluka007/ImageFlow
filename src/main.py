@@ -1420,11 +1420,15 @@ class ImageFlowApplication(Adw.Application):
         about = Adw.AboutDialog(
             application_name='ImageFlow',
             application_icon='tech.digiroad.ImageFlow',
-            developer_name='Golodnikov Sergey',
+            developer_name='oluka007 (fork maintainer)',
             version=self.version,
             comments=(self.w.ts_comment),
-            website='https://digiroad.tech',
-            developers=['Golodnikov Sergey <nn19051990@gmail.com>'],
+            website='https://github.com/oluka007/ImageFlow',
+            developers=[
+                'oluka007 (fork maintainer)',
+                'Golodnikov Sergey (original creator) '
+                '<nn19051990@gmail.com>',
+            ],
             artists=[
                 'Golodnikov Sergey <nn19051990@gmail.com>',
                 'GNOME Design Team https://welcome.gnome.org/team/design',
@@ -1432,7 +1436,7 @@ class ImageFlowApplication(Adw.Application):
             copyright='Copyright © 2026 Golodnikov Sergey',
             license_type=Gtk.License.GPL_3_0,
         )
-        about.add_link((self.w.ts_src), 'https://github.com/GS90/ImageFlow')
+        about.add_link((self.w.ts_src), 'https://github.com/oluka007/ImageFlow')
         about.present(self.props.active_window)
 
     def preferences_action(self, _widget, _):

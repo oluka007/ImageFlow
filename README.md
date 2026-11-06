@@ -37,12 +37,12 @@ This application converts videos into animated **GIF**, **WebP**, and **AVIF** i
 
 ## Installation
 
-The built packages are available on the [releases](https://github.com/GS90/ImageFlow/releases) page.
+The built packages are available on the [releases](https://github.com/oluka007/ImageFlow/releases) page.
 
 
 ### AppImage
 
-Download the latest AppImage from the [releases](https://github.com/GS90/ImageFlow/releases) page. Make it executable, then run it:
+Download the latest AppImage from the [releases](https://github.com/oluka007/ImageFlow/releases) page. Make it executable, then run it:
 
 ```
 chmod +x ImageFlow-*-x86_64.AppImage
@@ -58,7 +58,7 @@ GNOME Builder offers the easiest method to build and test ImageFlow. Clone the r
 ### Build from source
 
 ```
-git clone https://github.com/GS90/ImageFlow
+git clone https://github.com/oluka007/ImageFlow
 cd ImageFlow
 
 meson setup build
@@ -87,4 +87,5 @@ ImageFlow is a [free software](https://www.gnu.org/philosophy/free-sw.html) and 
 
 ## Copyright
 
-2026, [Golodnikov Sergey](https://github.com/GS90)
+This fork is maintained by [oluka007](https://github.com/oluka007). ImageFlow was
+originally created by [Golodnikov Sergey](https://github.com/GS90).
