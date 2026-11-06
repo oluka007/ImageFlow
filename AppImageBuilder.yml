@@ -16,6 +16,9 @@ AppDir:
     exec_args: $APPDIR/usr/bin/imageflow $@
   apt:
     arch: [amd64]
+    sources:
+      - sourceline: 'deb [arch=amd64] http://archive.ubuntu.com/ubuntu/ noble main universe'
+        key_url: 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x871920D1991BC93C'
     include:
       - ffmpeg
       - gir1.2-adw-1
