@@ -113,6 +113,7 @@ class WindowIF(Adw.ApplicationWindow):
     ts_error_frames = _('No frames to generate')
     ts_error_frames_detail = _(
         'Restore at least one frame or adjust the selected time range.')
+    ts_error_preview = _('Preview error')
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)

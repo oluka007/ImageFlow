@@ -116,6 +116,9 @@ class ImageFlowApplication(Adw.Application):
         self.generating = False
         self.frame_temp = tempfile.TemporaryDirectory(
             prefix='imageflow-frames-')
+        self.preview_temp = tempfile.TemporaryDirectory(
+            prefix='imageflow-preview-')
+        self.preview_path = None
         self.frame_process = None
         self.frame_process_lock = threading.Lock()
 
@@ -222,6 +225,7 @@ class ImageFlowApplication(Adw.Application):
 
     def accept_file(self, path: str):
         self.result, self.name = '', ''
+        self.preview_path = None
         self.source = path
         self.sources_size = None
         self.source_duration_us = 0
@@ -922,7 +926,10 @@ class ImageFlowApplication(Adw.Application):
         self.settings.set_boolean('loop', state)
         self.w.video.set_loop(state)
         if self.current != '':
-            self.w.video.set_filename(self.current)
+            path = self.current
+            if self.current == self.result and self.preview_path:
+                path = self.preview_path
+            self.w.video.set_filename(path)
             self.connect_stream()
 
     # -------------------------------------------------------------------------
@@ -1135,11 +1142,11 @@ class ImageFlowApplication(Adw.Application):
                 self.w.crop_toggle.set_active(False)
                 self.w.crop_toggle.set_sensitive(False)
                 self.w.crop_reset.set_sensitive(False)
-                if self.file_format in ('.webp', '.avif'):
-                    self.stack_adjust_visibility('external')
-                else:
-                    self.w.video.set_filename(self.result)
+                if self.preview_path:
+                    self.w.video.set_filename(self.preview_path)
                     self.stack_adjust_visibility('display')
+                else:
+                    self.stack_adjust_visibility('external')
                 self.current = self.result
                 self.update_crop_overlay()
                 self.update_frames_controls()
@@ -1352,11 +1359,40 @@ class ImageFlowApplication(Adw.Application):
                 self.generation_failed, 'Generation error', str(err))
             return
 
-        GLib.idle_add(self.generation_complete)
+        preview_path = self.result if self.file_format == '.gif' else None
+        preview_error = None
+        if self.file_format in ('.webp', '.avif'):
+            preview_path, preview_error = self.create_video_preview()
+        GLib.idle_add(
+            self.generation_complete, preview_path, preview_error)
+
+    def create_video_preview(self):
+        preview_path = os.path.join(self.preview_temp.name, 'preview.mp4')
+        try:
+            result = subprocess.run([
+                'ffmpeg', '-v', 'error', '-i', self.result,
+                '-map', '0:v:0', '-an', '-sn', '-dn',
+                '-vf', "scale=w='min(1280,iw)':h='min(720,ih)':"
+                'force_original_aspect_ratio=decrease:'
+                'force_divisible_by=2,format=yuv420p',
+                '-c:v', 'libx264', '-preset', 'ultrafast', '-crf', '30',
+                '-fps_mode', 'vfr', '-movflags', '+faststart', '-y',
+                preview_path,
+            ], stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
+        except OSError as err:
+            return None, str(err)
+
+        if result.returncode != 0:
+            detail = result.stderr.decode('utf-8').strip()
+            if not detail:
+                detail = f'FFmpeg exited with status {result.returncode}.'
+            return None, detail
+        return preview_path, None
 
     def generation_failed(self, message: str, detail: str):
         self.generating = False
         self.result = ''
+        self.preview_path = None
         self.stack_adjust_visibility('display')
         if self.source != '':
             # return to source stream; otherwise trim to avoid stale result
@@ -1373,8 +1409,9 @@ class ImageFlowApplication(Adw.Application):
         self.w.segment.set_visible(self.enable_trim)
         self.message_show(message, detail)
 
-    def generation_complete(self):
+    def generation_complete(self, preview_path, preview_error):
         self.generating = False
+        self.preview_path = preview_path
         basename = os.path.splitext(os.path.basename(self.source))[0]
         self.name = basename + self.file_format
 
@@ -1385,13 +1422,16 @@ class ImageFlowApplication(Adw.Application):
             timeout=4,
         ))
 
-        self.w.video.set_filename(self.result)
+        if self.preview_path:
+            self.w.video.set_filename(self.preview_path)
         self.current = self.result
         self.w.crop_toggle.set_sensitive(False)
         self.w.crop_reset.set_sensitive(False)
         self.w.frames_toggle.set_sensitive(bool(self.frame_buttons))
         self.update_frames_controls()
         self.switch_control(generate=True, preview=True, save=True)
+        if preview_error:
+            self.message_show(self.w.ts_error_preview, preview_error)
 
     def generate_wrapper(self, _):
         if self.all_output_frames_excluded():
@@ -1541,6 +1581,7 @@ class ImageFlowApplication(Adw.Application):
         self.frame_generation += 1
         self.cancel_frame_extraction()
         self.frame_temp.cleanup()
+        self.preview_temp.cleanup()
         # deleting temporary files
         if self.palette != '' and os.path.exists(self.palette):
             os.remove(self.palette)

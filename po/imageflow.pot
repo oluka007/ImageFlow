@@ -515,3 +515,7 @@ msgstr ""
 #: src/window.py:115
 msgid "Restore at least one frame or adjust the selected time range."
 msgstr ""
+
+#: src/window.py:116
+msgid "Preview error"
+msgstr ""

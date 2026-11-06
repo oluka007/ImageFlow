@@ -574,6 +574,10 @@ msgstr ""
 msgid "Restore at least one frame or adjust the selected time range."
 msgstr ""
 
+#: src/window.py:116
+msgid "Preview error"
+msgstr "Errore di anteprima"
+
 #~ msgid "If you’re using Flatpak, verify file access permissions"
 #~ msgstr "Se stai utilizzando Flatpak, verifica i permessi di accesso ai file"
 

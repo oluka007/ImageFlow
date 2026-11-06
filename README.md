@@ -32,7 +32,7 @@ This application converts videos into animated **GIF**, **WebP**, and **AVIF** i
 - [x] WebP encoding options.
 - [x] Time range selection.
 - [x] AVIF support.
-- [ ] WebP and AVIF preview.
+- [x] WebP and AVIF preview.
 
 
 ## Installation
@@ -66,6 +66,13 @@ ninja -C build install
 ```
 
 By default, meson should install ImageFlow to `/usr/local`.
+
+On Arch Linux and CachyOS, install GStreamer’s good plugins for MP4 and GIF
+playback in the GTK preview:
+
+```
+sudo pacman -S gst-plugins-good
+```
 
 ### Build an AppImage
 

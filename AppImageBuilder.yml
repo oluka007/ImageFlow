@@ -21,6 +21,7 @@ AppDir:
         key_url: 'https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x871920D1991BC93C'
     include:
       - ffmpeg
+      - adwaita-icon-theme
       - gir1.2-adw-1
       - gir1.2-gtk-4.0
       - gstreamer1.0-libav
@@ -28,6 +29,8 @@ AppDir:
       - gstreamer1.0-plugins-good
       - libadwaita-1-0
       - libgtk-4-1
+      - libgtk-4-media-gstreamer
+      - librsvg2-common
       - python3
       - python3-gi
   runtime:
