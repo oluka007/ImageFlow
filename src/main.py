@@ -873,16 +873,19 @@ class ImageFlowApplication(Adw.Application):
             case 'display':
                 self.w.display.set_visible(True)
                 self.w.spinner.set_visible(False)
+                self.w.spinner.set_spinning(False)
                 self.w.external.set_visible(False)
                 self.update_crop_overlay()
             case 'spinner':
                 self.w.display.set_visible(False)
                 self.w.spinner.set_visible(True)
+                self.w.spinner.set_spinning(True)
                 self.w.external.set_visible(False)
                 self.update_crop_overlay()
             case 'external':
                 self.w.display.set_visible(False)
                 self.w.spinner.set_visible(False)
+                self.w.spinner.set_spinning(False)
                 self.w.external.set_visible(True)
                 self.update_crop_overlay()
 
